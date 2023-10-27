@@ -1,10 +1,11 @@
 module Data.Time.Ages.Time where
-import Data.Time (UTCTime, NominalDiffTime, diffUTCTime)
+
+import Data.Time (NominalDiffTime, UTCTime, addUTCTime, diffUTCTime)
 import Data.Time.Ages.Internal
 import Data.Time.Clock (nominalDiffTimeToSeconds)
 
 addDurationToTime :: UTCTime -> Duration -> UTCTime
-addDurationToTime t d = undefined
+addDurationToTime t d = addUTCTime (durationToNominal d) t
 
 durationToNominal :: Duration -> NominalDiffTime
 durationToNominal (Duration p) = fromRational $ fromInteger p / factor Seconds

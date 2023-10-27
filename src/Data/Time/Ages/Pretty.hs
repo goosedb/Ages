@@ -15,7 +15,7 @@ durationPretty :: Duration -> String
 durationPretty = durationPretty' Picoseconds defaultUnitWords
 
 defaultUnitWords :: Unit -> UnitWord
-defaultUnitWords =  \case
+defaultUnitWords = \case
   Picoseconds -> mkuw "pico"
   Nanoseconds -> mkuw "nano"
   Microseconds -> mkuw "micro"
@@ -25,7 +25,8 @@ defaultUnitWords =  \case
   Hours -> mkuw "hour"
   Days -> mkuw "day"
   Weeks -> mkuw "week"
-  where mkuw s = UnitWord s (s <> "s")
+ where
+  mkuw s = UnitWord s (s <> "s")
 
 durationPretty' :: Unit -> (Unit -> UnitWord) -> Duration -> String
 durationPretty' minUnit toStr d@(Duration p) = applySign $ unwords $ ifEmpty $ reverse $ fst $ foldl'
@@ -40,7 +41,7 @@ durationPretty' minUnit toStr d@(Duration p) = applySign $ unwords $ ifEmpty $ r
   do ([], abs p)
   do list
  where
-  applySign = if p >= 0 then id else ("-"<>)
+  applySign = if p >= 0 then id else ("-" <>)
   applyUnitWord x UnitWord{..} = if x == 1 then singular else plural
   list = map wrap $ reverse [minUnit .. maxBound]
   ifEmpty = \case
